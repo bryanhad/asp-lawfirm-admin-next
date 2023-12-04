@@ -22,6 +22,7 @@ export async function addMember(formData: FormData) {
         profilePicture: formData.get("profilePicture"),
         email: formData.get("email"),
         password: formData.get("password"),
+        position: formData.get("positionId"),
         name: formData.get("name"),
         role: formData.get("role"),
     })

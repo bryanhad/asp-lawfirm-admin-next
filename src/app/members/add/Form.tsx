@@ -1,52 +1,84 @@
 "use client"
 
-import Input from "@/components/form/Input"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { AddMemberError } from "../../../../types"
 import { addMember } from "@/lib/actions/addMember.action"
 import { redirect } from "next/navigation"
 import ImageUpload from "./ImageUpload"
+import InputWithLabel from "@/components/form/InputWithLabel"
 
 export default function AddMemberForm() {
     const [error, setError] = useState<AddMemberError | null>()
-    const [profilePicture, setProfilePicture] = useState('')
+    const [profilePicture, setProfilePicture] = useState("")
 
     return (
         <form
             action={async (formData: FormData) => {
                 const res = await addMember(formData)
-                res.error
-                    ? toast.error(res.message)
-                    : toast.success(res.message)
-                if (res?.errors) {
+                if (res.error) {
+                    toast.error(res.message)
                     setError(res.errors)
+                } else {
+                    toast.success(res.message)
+                    redirect("/members")
                 }
-                redirect("/members")
             }}
             className="flex w-full flex-col gap-3"
         >
-            <ImageUpload setProfilePicture={setProfilePicture}/>
+            <ImageUpload setProfilePicture={setProfilePicture} />
             {profilePicture && (
-                <input type="text" name="profilePicture" defaultValue={profilePicture} className="" />
+                <input
+                    type="text"
+                    name="profilePicture"
+                    defaultValue={profilePicture}
+                    className=""
+                />
             )}
 
             {/* NAME */}
-            <Input name="name" placeholder="Name" required type="text" />
+            <InputWithLabel
+                label="Full Name"
+                name="name"
+                placeholder="Name"
+                required
+                type="text"
+                id="name"
+            />
             {error?.name && (
                 <p className="text-sm text-red-500">{error?.name[0]}</p>
             )}
             {/* EMAIL */}
-            <Input name="email" placeholder="Email" required type="email" />
+            <InputWithLabel
+                label="Email"
+                name="email"
+                placeholder="bambang@gmail.com"
+                required
+                type="text"
+                id="email"
+            />
+            {error?.email && (
+                <p className="text-sm text-red-500">{error?.email[0]}</p>
+            )}
+            {/* EMAIL */}
+            <InputWithLabel
+                label="Position"
+                name="position"
+                placeholder="Tukang bersih bersih"
+                required
+                type="text"
+                id="position"
+            />
             {error?.email && (
                 <p className="text-sm text-red-500">{error?.email[0]}</p>
             )}
             {/* PASSWORD */}
-            <Input
+            <InputWithLabel
+                label="Password"
                 name="password"
-                placeholder="Password"
                 required
-                type="password"
+                type="text"
+                id="password"
             />
             {error?.password && (
                 <p className="text-sm text-red-500">{error?.password[0]}</p>

@@ -120,10 +120,10 @@ export default async function MembersTable() {
                                         {/* {formatCurrency(member.amount)} */}
                                     </td>
                                     <td className="whitespace-nowrap px-3 py-3">
-                                        {/* {formatDateToLocal(member.date)} */}
+                                        {member.role}
                                     </td>
                                     <td className="whitespace-nowrap px-3 py-3">
-                                        {/* <memberStatus status={member.status} /> */}
+                                    {formatDate(member.createdAt)}
                                     </td>
                                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                                         <div className="flex justify-end gap-3">
@@ -144,6 +144,7 @@ export default async function MembersTable() {
 import { FaRegTrashAlt } from "react-icons/fa"
 import { LuPencil } from "react-icons/lu"
 import { DEFAULT_PROFILE_PIC } from "@/constants"
+import formatDate from "@/utils/formatDate"
 
 function UpdateInvoice({ id }: { id: string }) {
     return (
