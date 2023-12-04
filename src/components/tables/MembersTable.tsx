@@ -103,13 +103,13 @@ export default async function MembersTable() {
                                 >
                                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                                         <div className="flex items-center gap-3">
-                                            {/* <Image
-                                    src={member.image_url}
-                                    className="rounded-full"
-                                    width={28}
-                                    height={28}
+                                            <Image
+                                    src={member.profilePicture ?? DEFAULT_PROFILE_PIC}
+                                    className="rounded-full bg-slate-200"
+                                    width={35}
+                                    height={35}
                                     alt={`${member.name}'s profile picture`}
-                                /> */}
+                                />
                                             <p>{member.name}</p>
                                         </div>
                                     </td>
@@ -143,6 +143,7 @@ export default async function MembersTable() {
 
 import { FaRegTrashAlt } from "react-icons/fa"
 import { LuPencil } from "react-icons/lu"
+import { DEFAULT_PROFILE_PIC } from "@/constants"
 
 function UpdateInvoice({ id }: { id: string }) {
     return (

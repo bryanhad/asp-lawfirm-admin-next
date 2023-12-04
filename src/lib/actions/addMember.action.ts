@@ -14,10 +14,12 @@ const AddMemberSchema = z.object({
     role: z.enum(["ADMIN", "MEMBER"], {
         invalid_type_error: "please bro",
     }),
+    profilePicture: z.string().optional()
 })
 
 export async function addMember(formData: FormData) {
     const validation = AddMemberSchema.safeParse({
+        profilePicture: formData.get("profilePicture"),
         email: formData.get("email"),
         password: formData.get("password"),
         name: formData.get("name"),
@@ -33,7 +35,7 @@ export async function addMember(formData: FormData) {
     }
 
     try {
-        console.log('hehe')
+        console.log(validation.data, 'ini data yang masoek')
         const newMemberData = validation.data
         const newUser = await prisma.user.create({
             data: newMemberData

@@ -18,7 +18,7 @@ model User {
   name     String
   role     Role
 
-  image String?
+  profilePicture String?
   posts Post[]
 
   createdAt DateTime @default(now())

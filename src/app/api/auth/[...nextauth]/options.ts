@@ -28,7 +28,6 @@ export const options: NextAuthOptions = {
                 })
 
                 if (!user || credentials.password !== user.password) return null
-
                 console.log(user, 'LOGGEED IN!~')
                 return user
             },

@@ -6,9 +6,11 @@ import toast from "react-hot-toast"
 import { AddMemberError } from "../../../../types"
 import { addMember } from "@/lib/actions/addMember.action"
 import { redirect } from "next/navigation"
+import ImageUpload from "./ImageUpload"
 
 export default function AddMemberForm() {
     const [error, setError] = useState<AddMemberError | null>()
+    const [profilePicture, setProfilePicture] = useState('')
 
     return (
         <form
@@ -22,8 +24,13 @@ export default function AddMemberForm() {
                 }
                 redirect("/members")
             }}
-            className="flex flex-col gap-3 w-full"
+            className="flex w-full flex-col gap-3"
         >
+            <ImageUpload setProfilePicture={setProfilePicture}/>
+            {profilePicture && (
+                <input type="text" name="profilePicture" defaultValue={profilePicture} className="" />
+            )}
+
             {/* NAME */}
             <Input name="name" placeholder="Name" required type="text" />
             {error?.name && (
