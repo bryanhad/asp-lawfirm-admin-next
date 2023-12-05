@@ -75,7 +75,7 @@ export default function MemberForm({
                 <input
                     type="text"
                     name="picture"
-                    defaultValue={picture}
+                    value={picture} onChange={() => {}} 
                     className="hidden"
                 />
             )}
@@ -122,14 +122,12 @@ export default function MemberForm({
                         name="positionId"
                         label="Position"
                         placeholder="--Please choose a position--"
+                        defaultValue={memberData?.positionId}
                     >
                         {positions.map((position) => (
                             <option
                                 key={position.id}
                                 value={position.id}
-                                selected={
-                                    memberData?.positionId === position.id
-                                }
                             >
                                 {position.name}
                             </option>
@@ -146,9 +144,8 @@ export default function MemberForm({
                     id="description"
                     name="description"
                     label="Description"
-                    textDefaultValue={
-                        memberData?.description ? memberData.description : ""
-                    }
+                    defaultValue={memberData?.description ? memberData.description : ""}
+              
                 />
                 {/* EDUCATION */}
                 <UserInfoInput
