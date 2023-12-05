@@ -2,7 +2,7 @@ type TextAreaProps = {
     name: string
     id: string
     label?: string
-    defaultValue?: string
+    textDefaultValue?: string
     className?: string
 } & React.HTMLProps<HTMLTextAreaElement>
 
@@ -11,7 +11,7 @@ export default function TextArea({
     name,
     label,
     className,
-    defaultValue,
+    textDefaultValue,
     ...props
 }: TextAreaProps) {
     if (!label)
@@ -22,7 +22,7 @@ export default function TextArea({
                 id={id}
                 className="textarea textarea-bordered"
             >
-                {defaultValue}
+                {textDefaultValue}
             </textarea>
         )
 
@@ -37,7 +37,7 @@ export default function TextArea({
                 id={id}
                 className={`textarea textarea-bordered ${className}`}
             >
-                {defaultValue}
+                {textDefaultValue}
             </textarea>
         </div>
     )

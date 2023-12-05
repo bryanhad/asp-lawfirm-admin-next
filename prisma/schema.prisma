@@ -19,7 +19,9 @@ model User {
     password       String
     role           Role
     posts          Post[]
-    isMember       Member?
+
+    memberId String? @db.ObjectId @unique
+    isMember Member? @relation(fields: [memberId], references: [id])
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -40,8 +42,7 @@ model Member {
     positionId   String   @db.ObjectId
     position     Position @relation(fields: [positionId], references: [id])
 
-    userId String? @unique @db.ObjectId
-    isUser User?   @relation(fields: [userId], references: [id])
+    isUser User?  
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

@@ -1,6 +1,6 @@
 "use client"
 import Input from "@/components/form/Input"
-import { UserInfoType } from "../../../../types"
+import { UserInfoType } from "../../../types"
 import {
     Dispatch,
     SetStateAction,

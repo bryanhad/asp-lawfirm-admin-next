@@ -25,7 +25,7 @@ export default function PositionTableRow({
     const updatePositionWithId = editPosition.bind(null, position.id)
 
     const isEditingRow = (
-        <td colSpan={2}>
+        <td colSpan={3}>
             <form
                 action={async (formData: FormData) => {
                     const res = await updatePositionWithId(formData)
