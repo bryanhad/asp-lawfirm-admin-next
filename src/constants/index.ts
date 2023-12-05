@@ -2,10 +2,12 @@ import { MdSpaceDashboard } from "react-icons/md"
 import { FaUsers } from "react-icons/fa"
 import { BsPostcardFill } from "react-icons/bs"
 import { CgProfile } from "react-icons/cg"
+import { LuNetwork } from "react-icons/lu";
 
 export const links = [
     { name: "Dashboard", href: "/", icon: MdSpaceDashboard },
     { name: "Members", href: "/members", icon: FaUsers },
+    { name: "Positions", href: "/positions", icon: LuNetwork },
     { name: "Articles", href: "/articles", icon: BsPostcardFill },
     { name: "Profile", href: "/profile", icon: CgProfile },
 ]

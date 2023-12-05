@@ -28,7 +28,7 @@ export default function ImageUpload({setProfilePicture}: {setProfilePicture: Rea
                     }
                     height={80}
                     width={80}
-                    className={`rounded-full ${
+                    className={`rounded-full h-auto ${
                         loading ? "brightness-50" : "brightness-100"
                     }`}
                     alt="profPic"
