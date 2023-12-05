@@ -3,6 +3,7 @@ type InputType = {
     id: string
     label?: string
     className?: string
+    extra?:React.ReactNode
 } & React.InputHTMLAttributes<HTMLInputElement>
 
 export default function Input({
@@ -10,6 +11,7 @@ export default function Input({
     name,
     id,
     className,
+    extra,
     ...props
 }: InputType) {
     if (!label)
@@ -26,7 +28,7 @@ export default function Input({
     return (
         <div className="flex flex-col gap-2">
             <label className="text-slate-500" htmlFor={id}>
-                {label}
+                {label}{extra}
             </label>
             <input
                 size={1}
