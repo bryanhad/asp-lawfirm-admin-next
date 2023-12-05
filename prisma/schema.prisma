@@ -14,14 +14,12 @@ model User {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     email          String  @unique
-    password       String
-    name           String
-    role           Role
     profilePicture String?
-
-    posts      Post[]
-    positionId String   @db.ObjectId
-    position   Position @relation(fields: [positionId], references: [id])
+    username       String
+    password       String
+    role           Role
+    posts          Post[]
+    isMember       Member?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -29,10 +27,32 @@ model User {
     @@map("users")
 }
 
+model Member {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    email        String   @unique
+    name         String
+    picture      String?
+    description  String?
+    education    String[]
+    organization String[]
+    practices    String[]
+    positionId   String   @db.ObjectId
+    position     Position @relation(fields: [positionId], references: [id])
+
+    userId String? @unique @db.ObjectId
+    isUser User?   @relation(fields: [userId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("members")
+}
+
 model Position {
-    id    String @id @default(auto()) @map("_id") @db.ObjectId
-    name  String @unique
-    users User[]
+    id      String   @id @default(auto()) @map("_id") @db.ObjectId
+    name    String   @unique
+    members Member[]
 
     @@map("positions")
 }
@@ -53,5 +73,5 @@ model Post {
 
 enum Role {
     ADMIN
-    MEMBER
+    USER
 }

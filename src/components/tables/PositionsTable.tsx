@@ -7,7 +7,7 @@ export default async function PositionsTable() {
         include: {
             _count: {
                 select: {
-                    users: true,
+                    members: true,
                 },
             },
         },

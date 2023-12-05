@@ -5,7 +5,9 @@ import { FaRegTrashAlt } from "react-icons/fa"
 import Link from "next/link"
 
 type IconButtonTypes = {
-    icon: "edit" | "delete" | "confirm" | "cancel"
+    icon: "edit" | "delete" | "confirm" | "cancel" | "small-delete"
+    isLink?: boolean
+    href?: string
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
 type MyButtonTypes = {
@@ -14,7 +16,7 @@ type MyButtonTypes = {
     href?: string
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-export function IconButton({ icon, ...props }: IconButtonTypes) {
+export function IconButton({ icon, isLink, href, ...props }: IconButtonTypes) {
     let showIcon
     let customStyle: string
 
@@ -22,6 +24,30 @@ export function IconButton({ icon, ...props }: IconButtonTypes) {
     const DELETE_STYLE = "text-red-400"
     const CONFIRM_STYLE = "bg-green-400 text-white"
     const CANCEL_STYLE = "bg-slate-300 text-white"
+
+    const SMALL_DELETE_STYLE = 'bg-red-400 text-white p-1'
+
+    if (icon.includes("small")) {
+        switch (icon) {
+            case "small-delete":
+                showIcon = <IoCloseOutline />
+                customStyle = SMALL_DELETE_STYLE
+                break
+            default:
+                throw Error(
+                    `icon of '${icon}' is not specified in component IconButton -small version!`,
+                )
+        }
+
+        return (
+            <button
+                className={`text-xs ${customStyle} ${props.className}`}
+                {...props}
+            >
+                {showIcon}
+            </button>
+        )
+    }
 
     switch (icon) {
         case "edit":
@@ -45,6 +71,18 @@ export function IconButton({ icon, ...props }: IconButtonTypes) {
                 `icon of '${icon}' is not specified in component IconButton!`,
             )
     }
+
+    if (isLink && href) {
+        return (
+            <Link
+                className={`btn btn_icon ${customStyle} ${props.className}`}
+                href={href}
+            >
+                {showIcon}
+            </Link>
+        )
+    }
+
     return (
         <button
             className={`btn btn_icon ${customStyle} ${props.className}`}
