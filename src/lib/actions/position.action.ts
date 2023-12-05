@@ -2,6 +2,8 @@
 import { z } from "zod"
 import { prisma } from "@/lib/db/prisma"
 import { revalidatePath } from "next/cache"
+import { DeletePositionState, EditPositionState } from "../../../types"
+import getPrismaError from "@/utils/getPrismaError"
 
 const AddPositionSchema = z
     .string({ required_error: "Field cannot be empty" })
@@ -22,30 +24,58 @@ export async function addPosition(formData: FormData) {
         revalidatePath("/positions")
         return { message: `Successfully created ${newPosition.name}` }
     } catch (err: any) {
-        if (err.code) {
-            switch (err.code) {
-                case "P2002":
-                    return { error: `Position has been registered` }
-                default:
-                    return { error: "unknown error code from prisma" }
-            }
-        }
-        return {
-            error: "Something went wrong :(",
-        }
+        const res = getPrismaError(err)
+        if (res) return res
+        throw(err)
     }
 }
 
-export async function deletePosition(id: string) {
+export async function deletePosition(
+    id: string,
+): Promise<DeletePositionState> {
     try {
-        const {name} = await prisma.position.delete({
+        const { name } = await prisma.position.delete({
             where: {
                 id,
             },
         })
         revalidatePath("/positions")
-        return name
-    } catch (err) {
-        console.log(err)
+        return {
+            error: false,
+            message: `Position '${name}' has successfully been deleted.`,
+        }
+    } catch (err: any) {
+        const res = getPrismaError(err)
+        if (res) return res
+        throw(err)
+    }
+}
+
+export async function editPosition(
+    id: string,
+    formData: FormData,
+): Promise<EditPositionState> {
+    const validation = AddPositionSchema.safeParse(formData.get("position"))
+
+    if (!validation.success)
+        return {
+            error: true,
+            message: validation.error.flatten().formErrors[0],
+        }
+
+    try {
+        const { name } = await prisma.position.update({
+            where: { id },
+            data: { name: validation.data },
+        })
+        revalidatePath("/positions")
+        return {
+            error: false,
+            message: `Successfully updated position '${name}'`,
+        }
+    } catch (err: any) {
+        const res = getPrismaError(err)
+        if (res) return res
+        throw(err)
     }
 }

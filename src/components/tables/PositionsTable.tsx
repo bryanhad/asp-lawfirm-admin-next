@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/db/prisma"
 import Table from "./Table"
-import DeletePositionButton from "./DeletePositionButton"
 import PositionTableRow from "./PositionTableRow"
 
 export default async function PositionsTable() {

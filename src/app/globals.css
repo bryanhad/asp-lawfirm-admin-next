@@ -12,3 +12,7 @@ input {
 .btn_icon {
     @apply text-xl md:text-2xl
 }
+
+.text-error {
+    @apply text-sm text-red-500
+}
