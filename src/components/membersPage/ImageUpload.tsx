@@ -9,8 +9,10 @@ import { DEFAULT_PROFILE_PIC } from "@/constants"
 
 export default function ImageUpload({
     setPicture,
+    picture
 }: {
     setPicture: React.Dispatch<string>
+    picture?:string
 }) {
     const [loading, setLoading] = useState(false)
     const [currentImage, setCurrentImage] = useState<
@@ -20,7 +22,7 @@ export default function ImageUpload({
             url: string
             size: number
         }[]
-    >([])
+    >(picture ? [{name: '', key: '', url: picture, size: 0}] : [])
     return (
         <div>
             <div className="flex items-center gap-6">
@@ -61,7 +63,7 @@ export default function ImageUpload({
                 />
             </div>
             {currentImage.length > 0 && (
-                <p className="text-slate-400 mt-2">{currentImage[0].name}</p>
+                <p className="text-slate-400 mt-2">{currentImage[0]?.name}</p>
             )}
         </div>
     )

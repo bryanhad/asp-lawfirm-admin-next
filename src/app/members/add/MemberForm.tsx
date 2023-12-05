@@ -3,32 +3,63 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { AddMemberError, UserInfoType } from "../../../../types"
-import { addMember } from "@/lib/actions/member.action"
+import { MemberFormType, addMember } from "@/lib/actions/member.action"
 import { redirect } from "next/navigation"
-import ImageUpload from "./ImageUpload"
+import ImageUpload from "../../../components/membersPage/ImageUpload"
 import Input from "@/components/form/Input"
 import { Position } from "@prisma/client"
-import UserInfoInput from "./UserInfoInput"
+import UserInfoInput from "../../../components/membersPage/UserInfoInput"
 import TextArea from "@/components/form/TextArea"
 import Select from "@/components/form/Select"
 
-export default function AddMemberForm({
-    positions,
-}: {
+type MemberFormProps = {
+    memberData?: MemberFormType & UserInfoType
     positions: Position[]
-}) {
+    serverAction(formData: FormData, userInfo: UserInfoType): Promise<{
+        error: boolean;
+        errors?: {
+            name?: string[] | undefined;
+            email?: string[] | undefined;
+            picture?: string[] | undefined;
+            description?: string[] | undefined;
+            positionId?: string[] | undefined;
+        };
+        message: string;
+    }>
+}
+
+export default function MemberForm({
+    memberData,
+    positions,
+    serverAction
+}: MemberFormProps) {
+    // dont judge me :D
+    // the abomination below just checks whether there is a memberData or not.
+    // e.g. if memberData.education > 0 ? use it as default value!
     const [userInfo, setUserInfo] = useState<UserInfoType>({
-        education: [],
-        organization: [],
-        practices: [],
+        education: memberData?.education.length
+            ? memberData.education.length > 0
+                ? memberData?.education
+                : []
+            : [],
+        organization: memberData?.organization.length
+            ? memberData.organization.length > 0
+                ? memberData?.organization
+                : []
+            : [],
+        practices: memberData?.practices.length
+            ? memberData.practices.length > 0
+                ? memberData?.practices
+                : []
+            : [],
     })
     const [error, setError] = useState<AddMemberError | null>()
-    const [picture, setPicture] = useState("")
+    const [picture, setPicture] = useState<string>(memberData?.picture ?? "")
 
     return (
         <form
             action={async (formData: FormData) => {
-                const res = await addMember(formData, userInfo)
+                const res = await serverAction(formData, userInfo)
                 if (res.error) {
                     toast.error(res.message)
                     setError(res.errors)
@@ -39,12 +70,12 @@ export default function AddMemberForm({
             }}
             className="flex w-full flex-col gap-3"
         >
-            <ImageUpload setPicture={setPicture} />
+            <ImageUpload picture={picture} setPicture={setPicture} />
             {picture && (
                 <input
                     type="text"
                     name="picture"
-                    defaultValue={picture}
+                    value={picture} onChange={() => {}} 
                     className="hidden"
                 />
             )}
@@ -59,6 +90,7 @@ export default function AddMemberForm({
                         required
                         type="text"
                         id="name"
+                        defaultValue={memberData?.name}
                     />
                     {error?.name && (
                         <p className="mt-2 text-sm text-red-500">
@@ -75,6 +107,7 @@ export default function AddMemberForm({
                         required
                         type="text"
                         id="email"
+                        defaultValue={memberData?.email}
                     />
                     {error?.email && (
                         <p className="mt-2 text-sm text-red-500">
@@ -89,9 +122,13 @@ export default function AddMemberForm({
                         name="positionId"
                         label="Position"
                         placeholder="--Please choose a position--"
+                        defaultValue={memberData?.positionId}
                     >
                         {positions.map((position) => (
-                            <option key={position.id} value={position.id}>
+                            <option
+                                key={position.id}
+                                value={position.id}
+                            >
                                 {position.name}
                             </option>
                         ))}
@@ -107,6 +144,8 @@ export default function AddMemberForm({
                     id="description"
                     name="description"
                     label="Description"
+                    defaultValue={memberData?.description ? memberData.description : ""}
+              
                 />
                 {/* EDUCATION */}
                 <UserInfoInput
