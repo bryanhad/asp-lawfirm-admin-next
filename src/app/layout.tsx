@@ -40,7 +40,7 @@ export default function RootLayout({
     const NAV_HEIGHT = 72
 
     return (
-        <html lang="en">
+        <html lang="en" data-theme='light'>
             <body
                 className={`${inter.className} antialiased flex flex-col lg:flex-row min-h-screen`}
             >
