@@ -1,10 +1,10 @@
 "use client"
 
 import { useState, useRef } from "react"
-import InputWithLabel from "@/components/form/InputWithLabel"
+import Input from "@/components/form/Input"
 import { addPosition } from "@/lib/actions/position.action"
 import toast from "react-hot-toast"
-import { Button, IconButton } from "@/components/form/Buttons"
+import { Button } from "@/components/form/Buttons"
 
 export default function AddPositionForm() {
     const [error, setError] = useState("")
@@ -19,18 +19,19 @@ export default function AddPositionForm() {
                     if (res.error) return setError(res.error)
                     if (res.message) {
                         toast.success(res.message)
-                        if (error) setError('')
+                        if (error) setError("")
                         ref.current?.reset()
                     }
                 }}
             >
-                <InputWithLabel
+                <Input
+                    id="position"
                     className="flex-1"
                     name="position"
                     type="text"
                     placeholder="Add new position"
                 />
-                
+
                 <Button buttonType="add" type="submit">
                     Add New
                 </Button>

@@ -5,7 +5,7 @@ import NavLinks from "./NavLinks"
 
 export default function SideBar() {
     return (
-        <nav className="bg-primary text-white p-4 hidden lg:flex flex-col gap-6 ">
+        <nav className="bg-primary text-white p-4 hidden lg:flex flex-col gap-6 min-w-[320px]">
             <Logo />
             <ul className="flex flex-col gap-4">
                 <NavLinks />
