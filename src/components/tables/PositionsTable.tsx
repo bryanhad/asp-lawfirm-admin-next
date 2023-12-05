@@ -14,7 +14,7 @@ export default async function PositionsTable() {
     })
 
     return (
-        <Table headers={["Title"]} actionCollumn>
+        <Table headers={["Title", "Member Count"]} actionCollumn>
             {positions.map((position, i) => (
                 <tr
                     className={`bg-white ${

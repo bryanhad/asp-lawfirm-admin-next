@@ -19,7 +19,7 @@ export default function Table({
                             <th className="px-6 py-4" key={header}>{header}</th>
                         ))}
                         {actionCollumn && (
-                            <th scope="col" className="relative">
+                            <th scope="col">
                                 <span className="sr-only">Edit</span>
                             </th>
                         )}
