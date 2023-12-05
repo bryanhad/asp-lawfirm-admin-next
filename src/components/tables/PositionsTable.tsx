@@ -1,30 +1,28 @@
 import { prisma } from "@/lib/db/prisma"
+import Table from "./Table"
+import DeletePositionButton from "./DeletePositionButton"
+import PositionTableRow from "./PositionTableRow"
 
 export default async function PositionsTable() {
-    const positions = await prisma.position.groupBy({
-        by: ['name'],
-        : {
-
-        }
+    const positions = await prisma.position.findMany({
         include: {
-            users: true
-        }
+            _count: {
+                select: {
+                    users: true,
+                },
+            },
+        },
     })
 
-  return (
-    <section className="bg-slate-200">
-        {positions.map(position => (
-            <div key={position.id}>
-                <p className="text-xl">{position.name}</p>
-                
-
-            </div>
-        ))}
-
-        <table>
-
-        </table>
-
-    </section>
-  )
+    return (
+        <Table headers={['Title']} actionCollumn>
+            {positions.map((position, i) => (
+                <tr className={`bg-white ${i < positions.length-1 ? 'border-b': ''}`} key={position.id}>
+                    <PositionTableRow position={position}/>
+                </tr>
+            ))}
+        </Table>
+    )
 }
+
+
