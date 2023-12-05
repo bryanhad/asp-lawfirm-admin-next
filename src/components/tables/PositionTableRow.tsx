@@ -1,8 +1,8 @@
 "use client"
 import { useState } from "react"
-import InputWithLabel from "../form/InputWithLabel"
+import Input from "../form/Input"
 import { Position } from "@prisma/client"
-import {IconButton} from "../form/Buttons"
+import { IconButton } from "../form/Buttons"
 import { deletePosition, editPosition } from "@/lib/actions/position.action"
 import toast from "react-hot-toast"
 import Swal from "sweetalert2"
@@ -10,11 +10,15 @@ import { showConfirm } from "@/lib/swalFire"
 
 type PositionType = {
     _count: {
-        users: number;
-    };
+        users: number
+    }
 } & Position
 
-export default function PositionTableRow({ position }: { position: PositionType }) {
+export default function PositionTableRow({
+    position,
+}: {
+    position: PositionType
+}) {
     const [isEditing, setIsEditing] = useState(false)
     const [error, setError] = useState("")
 
@@ -28,11 +32,11 @@ export default function PositionTableRow({ position }: { position: PositionType 
                     if (res.error) return setError(res.message)
                     toast.success(res.message)
                     setIsEditing(false)
-                    setError('')
+                    setError("")
                 }}
                 className="flex items-center gap-3 p-1"
             >
-                <InputWithLabel
+                <Input
                     name="position"
                     className="flex-1"
                     defaultValue={position.name}
@@ -44,18 +48,14 @@ export default function PositionTableRow({ position }: { position: PositionType 
                     type="button"
                 />
             </form>
-            {error && (
-                <p className="text-error p-2">{error}</p>
-            )}
+            {error && <p className="text-error p-2">{error}</p>}
         </td>
     )
 
     const isNotEditingRow = (
         <>
             <td className="px-6">{position.name}</td>
-            <td className="px-6">
-                {position._count.users}
-            </td>
+            <td className="px-6">{position._count.users}</td>
             <td>
                 <div className="flex justify-end gap-3">
                     <IconButton
