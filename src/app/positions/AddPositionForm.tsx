@@ -1,10 +1,10 @@
 "use client"
 
 import { useState, useRef } from "react"
-import Button from "@/components/Button"
 import InputWithLabel from "@/components/form/InputWithLabel"
 import { addPosition } from "@/lib/actions/position.action"
 import toast from "react-hot-toast"
+import { Button, IconButton } from "@/components/form/Buttons"
 
 export default function AddPositionForm() {
     const [error, setError] = useState("")
@@ -30,7 +30,8 @@ export default function AddPositionForm() {
                     type="text"
                     placeholder="Add new position"
                 />
-                <Button className="bg-green-500 text-white" type="submit">
+                
+                <Button buttonType="add" type="submit">
                     Add New
                 </Button>
             </form>

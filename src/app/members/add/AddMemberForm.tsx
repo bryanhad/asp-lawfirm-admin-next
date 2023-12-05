@@ -3,12 +3,17 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { AddMemberError } from "../../../../types"
-import { addMember } from "@/lib/actions/addMember.action"
+import { addMember } from "@/lib/actions/member.action"
 import { redirect } from "next/navigation"
 import ImageUpload from "./ImageUpload"
 import InputWithLabel from "@/components/form/InputWithLabel"
+import { Position } from "@prisma/client"
 
-export default function AddMemberForm() {
+export default function AddMemberForm({
+    positions,
+}: {
+    positions: Position[]
+}) {
     const [error, setError] = useState<AddMemberError | null>()
     const [profilePicture, setProfilePicture] = useState("")
 
@@ -60,15 +65,15 @@ export default function AddMemberForm() {
             {error?.email && (
                 <p className="text-sm text-red-500">{error?.email[0]}</p>
             )}
-            {/* EMAIL */}
-            <InputWithLabel
-                label="Position"
-                name="position"
-                placeholder="Tukang bersih bersih"
-                required
-                type="text"
-                id="position"
-            />
+            {/* POSITION */}
+            <label htmlFor="position">Position</label>
+            <select name="positionId" id="position">
+                <option value="" hidden>--Please choose a position--</option>
+                {positions.map(position => (
+                    <option key={position.id} value={position.id}>{position.name}</option>
+                ))}
+            </select>
+
             {error?.email && (
                 <p className="text-sm text-red-500">{error?.email[0]}</p>
             )}

@@ -25,14 +25,12 @@ export async function addPosition(formData: FormData) {
         return { message: `Successfully created ${newPosition.name}` }
     } catch (err: any) {
         const res = getPrismaError(err)
-        if (res) return res
-        throw(err)
+        if (res) return { error: res }
+        throw err
     }
 }
 
-export async function deletePosition(
-    id: string,
-): Promise<DeletePositionState> {
+export async function deletePosition(id: string): Promise<DeletePositionState> {
     try {
         const { name } = await prisma.position.delete({
             where: {
@@ -46,8 +44,8 @@ export async function deletePosition(
         }
     } catch (err: any) {
         const res = getPrismaError(err)
-        if (res) return res
-        throw(err)
+        if (res) return { error: true, message: res }
+        throw err
     }
 }
 
@@ -75,7 +73,7 @@ export async function editPosition(
         }
     } catch (err: any) {
         const res = getPrismaError(err)
-        if (res) return res
-        throw(err)
+        if (res) return { error: true, message: res }
+        throw err
     }
 }

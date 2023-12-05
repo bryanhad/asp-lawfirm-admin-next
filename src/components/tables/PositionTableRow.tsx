@@ -1,10 +1,9 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import InputWithLabel from "../form/InputWithLabel"
 import { Position } from "@prisma/client"
-import IconButton from "../form/Buttons"
+import {IconButton} from "../form/Buttons"
 import { deletePosition, editPosition } from "@/lib/actions/position.action"
-import { useFormState } from "react-dom"
 import toast from "react-hot-toast"
 import Swal from "sweetalert2"
 import { showConfirm } from "@/lib/swalFire"
@@ -13,24 +12,7 @@ export default function PositionTableRow({ position }: { position: Position }) {
     const [isEditing, setIsEditing] = useState(false)
     const [error, setError] = useState("")
 
-    const initialState = { error: false, validationError: false, message: "" }
     const updatePositionWithId = editPosition.bind(null, position.id)
-    // const [state, dispatch] = useFormState(updatePositionWithId, initialState)
-
-    // useEffect(() => {
-    //     if (!state.error) {
-    //         toast.success(state.message)
-    //         setIsEditing(false)
-    //     } else {
-    //         if (!state.validationError) {
-    //             Swal.fire({
-    //                 icon: "error",
-    //                 title: "Oops...",
-    //                 text: state.message,
-    //             })
-    //         }
-    //     }
-    // }, [state])
 
     const isEditingRow = (
         <td colSpan={2}>

@@ -1,5 +1,5 @@
 import PageTitle from "@/components/PageTitle"
-import SearchBar from "./SearchBar"
+import SearchBar from "../../components/form/SearchBar"
 import AddPositionForm from "./AddPositionForm"
 import PositionsTable from "@/components/tables/PositionsTable"
 import { Suspense } from "react"

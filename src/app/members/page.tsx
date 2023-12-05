@@ -1,13 +1,18 @@
-import MembersTable from "@/components/tables/MembersTable";
-import Link from 'next/link'
+import { Button } from "@/components/form/Buttons"
+import SearchBar from "@/components/form/SearchBar"
+import MembersTable from "@/components/tables/MembersTable"
+
 export default function MembersPage() {
-  return (
-    <div>
-      MembersPage
-      <Link href='/members/add' className="bg-accent text-white p-4">
-        add Member
-      </Link>
-      <MembersTable/>
-    </div>
-  )
+    return (
+        <div>
+            MembersPage
+            <div className="flex gap-2">
+                <SearchBar placeholder="Search..." />
+                <Button isLink href="/members/add" buttonType="add" type="submit">
+                    Add New
+                </Button>
+            </div>
+            <MembersTable />
+        </div>
+    )
 }

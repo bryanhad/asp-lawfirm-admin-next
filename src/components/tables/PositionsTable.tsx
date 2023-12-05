@@ -14,14 +14,17 @@ export default async function PositionsTable() {
     })
 
     return (
-        <Table headers={['Title']} actionCollumn>
+        <Table headers={["Title"]} actionCollumn>
             {positions.map((position, i) => (
-                <tr className={`bg-white ${i < positions.length-1 ? 'border-b': ''}`} key={position.id}>
-                    <PositionTableRow position={position}/>
+                <tr
+                    className={`bg-white ${
+                        i < positions.length - 1 ? "border-b" : ""
+                    }`}
+                    key={position.id}
+                >
+                    <PositionTableRow position={position} />
                 </tr>
             ))}
         </Table>
     )
 }
-
-

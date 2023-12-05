@@ -1,12 +1,14 @@
 import MaxWidthContainer from "@/components/MaxWidthContainer";
-import AddMemberForm from "./Form";
+import AddMemberForm from "./AddMemberForm";
+import { prisma } from "@/lib/db/prisma";
 
-export default function AddMemberPage() {
+export default async function AddMemberPage() {
+    const positions = await prisma.position.findMany()
     return (
         <>
         <MaxWidthContainer>
             <div>add member page</div>
-            <AddMemberForm/>
+            <AddMemberForm positions={positions}/>
 
         </MaxWidthContainer>
         </>
