@@ -9,6 +9,7 @@ import {
     ChangeEvent,
 } from "react"
 import { IconButton } from "@/components/form/Buttons"
+import capitalizeFirstLetter from "@/utils/capitalizeFirstLetter"
 
 type UserInfos = "education" | "organization" | "practices"
 
@@ -53,7 +54,8 @@ export default function UserInfoInput({
     return (
         <div className="flex flex-col gap-2">
             <Input
-                label={infoType}
+                label={`${capitalizeFirstLetter(infoType)}`}
+                extra={<span className="italic text-slate-300 ml-2">(Press enter to submit)</span>}
                 name={infoType}
                 type="text"
                 id={infoType}
