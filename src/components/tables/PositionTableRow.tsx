@@ -8,7 +8,13 @@ import toast from "react-hot-toast"
 import Swal from "sweetalert2"
 import { showConfirm } from "@/lib/swalFire"
 
-export default function PositionTableRow({ position }: { position: Position }) {
+type PositionType = {
+    _count: {
+        users: number;
+    };
+} & Position
+
+export default function PositionTableRow({ position }: { position: PositionType }) {
     const [isEditing, setIsEditing] = useState(false)
     const [error, setError] = useState("")
 
@@ -47,6 +53,9 @@ export default function PositionTableRow({ position }: { position: Position }) {
     const isNotEditingRow = (
         <>
             <td className="px-6">{position.name}</td>
+            <td className="px-6">
+                {position._count.users}
+            </td>
             <td>
                 <div className="flex justify-end gap-3">
                     <IconButton
