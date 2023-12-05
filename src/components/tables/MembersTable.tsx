@@ -1,4 +1,3 @@
-import Link from "next/link"
 import Image from "next/image"
 import { prisma } from "@/lib/db/prisma"
 
@@ -7,9 +6,10 @@ import { DEFAULT_PROFILE_PIC } from "@/constants"
 import { IconButton } from "../form/Buttons"
 
 export default async function MembersTable() {
-    const members = await prisma.user.findMany({
+    const members = await prisma.member.findMany({
         include: {
             position: { select: { name: true } },
+            isUser: { select: { role: true } },
         },
     })
     return (
@@ -27,10 +27,7 @@ export default async function MembersTable() {
                                     className="rounded-full bg-slate-200"
                                     height={35}
                                     width={35}
-                                    src={
-                                        member.profilePicture ??
-                                        DEFAULT_PROFILE_PIC
-                                    }
+                                    src={member.picture ?? DEFAULT_PROFILE_PIC}
                                     alt={`${member.name}'s profile picture`}
                                 />
                                 <span className="flex flex-col">
@@ -85,16 +82,18 @@ export default async function MembersTable() {
                         >
                             <td className="whitespace-nowrap py-3 pl-6 pr-3">
                                 <div className="flex items-center gap-3">
-                                    <Image
-                                        src={
-                                            member.profilePicture ??
-                                            DEFAULT_PROFILE_PIC
-                                        }
-                                        className="rounded-full"
-                                        width={28}
-                                        height={28}
-                                        alt={`${member.name}'s profile picture`}
-                                    />
+                                    <div className="grid h-[35px] w-[35px] place-content-center overflow-hidden rounded-full">
+                                        <Image
+                                            src={
+                                                member.picture ??
+                                                DEFAULT_PROFILE_PIC
+                                            }
+                                            className="rounded-full"
+                                            width={35}
+                                            height={35}
+                                            alt={`${member.name}'s profile picture`}
+                                        />
+                                    </div>
                                     <p>{member.name}</p>
                                 </div>
                             </td>
@@ -105,11 +104,11 @@ export default async function MembersTable() {
                                 {member.position.name}
                             </td>
                             <td className="whitespace-nowrap px-3 py-3">
-                                {member.role}
+                                {member.isUser ? member.isUser.role : 'Member'}
                             </td>
                             <td className="whitespace-nowrap py-3 pl-6 pr-3">
                                 <div className="flex justify-end gap-3">
-                                    <IconButton icon="edit" />
+                                    <IconButton isLink href={`/members/${member.id}/edit`} icon="edit" />
                                     <IconButton icon="delete" />
                                 </div>
                             </td>

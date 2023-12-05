@@ -23,7 +23,7 @@ export default function AddMemberForm({
         practices: [],
     })
     const [error, setError] = useState<AddMemberError | null>()
-    const [profilePicture, setProfilePicture] = useState("")
+    const [picture, setPicture] = useState("")
 
     return (
         <form
@@ -39,13 +39,13 @@ export default function AddMemberForm({
             }}
             className="flex w-full flex-col gap-3"
         >
-            <ImageUpload setProfilePicture={setProfilePicture} />
-            {profilePicture && (
+            <ImageUpload setPicture={setPicture} />
+            {picture && (
                 <input
                     type="text"
-                    name="profilePicture"
-                    defaultValue={profilePicture}
-                    className=""
+                    name="picture"
+                    defaultValue={picture}
+                    className="hidden"
                 />
             )}
 
@@ -61,7 +61,9 @@ export default function AddMemberForm({
                         id="name"
                     />
                     {error?.name && (
-                        <p className="text-sm text-red-500 mt-2">{error.name[0]}</p>
+                        <p className="mt-2 text-sm text-red-500">
+                            {error.name[0]}
+                        </p>
                     )}
                 </div>
                 {/* EMAIL */}
@@ -75,7 +77,9 @@ export default function AddMemberForm({
                         id="email"
                     />
                     {error?.email && (
-                        <p className="text-sm text-red-500 mt-2">{error.email[0]}</p>
+                        <p className="mt-2 text-sm text-red-500">
+                            {error.email[0]}
+                        </p>
                     )}
                 </div>
                 {/* POSITION */}
@@ -86,7 +90,6 @@ export default function AddMemberForm({
                         label="Position"
                         placeholder="--Please choose a position--"
                     >
-                        {" "}
                         {positions.map((position) => (
                             <option key={position.id} value={position.id}>
                                 {position.name}
@@ -94,21 +97,9 @@ export default function AddMemberForm({
                         ))}
                     </Select>
                     {error?.positionId && (
-                        <p className="text-sm text-red-500 mt-2">{error.positionId[0]}</p>
-                    )}
-                </div>
-
-                {/* PASSWORD */}
-                <div>
-                    <Input
-                        label="Password"
-                        name="password"
-                        required
-                        type="text"
-                        id="password"
-                    />
-                    {error?.password && (
-                        <p className="text-sm text-red-500 mt-2">{error.password[0]}</p>
+                        <p className="mt-2 text-sm text-red-500">
+                            {error.positionId[0]}
+                        </p>
                     )}
                 </div>
                 {/* DESCRIPTION */}
@@ -135,51 +126,9 @@ export default function AddMemberForm({
                     infos={userInfo.practices}
                     setUserInfo={setUserInfo}
                 />
-                {/* ROLE RADIO SELECT */}
-                <div className="flex flex-col gap-2">
-                    <p className="text-slate-500">Role</p>
-                    <section className="flex gap-3">
-                        <div className="flex items-center gap-2">
-                            <input
-                                id="member"
-                                type="radio"
-                                value="MEMBER"
-                                name="role"
-                                defaultChecked
-                                className="radio radio-info"
-                            />
-
-                            <label
-                                htmlFor="member"
-                                className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                            >
-                                Member
-                            </label>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <input
-                                id="admin"
-                                type="radio"
-                                value="ADMIN"
-                                name="role"
-                                className="radio radio-info"
-                            />
-
-                            <label
-                                htmlFor="admin"
-                                className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                            >
-                                Admin
-                            </label>
-                        </div>
-                    </section>
-                </div>
-                {error?.role && (
-                    <p className="text-sm text-red-500 mt-2">{error.role[0]}</p>
-                )}
             </div>
 
-            <button className="btn bg-accent font-semibold text-white mt-6">
+            <button className="btn mt-6 bg-accent font-semibold text-white">
                 Add Member
             </button>
         </form>

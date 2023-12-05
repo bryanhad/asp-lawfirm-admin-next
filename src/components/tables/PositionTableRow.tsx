@@ -10,7 +10,7 @@ import { showConfirm } from "@/lib/swalFire"
 
 type PositionType = {
     _count: {
-        users: number
+        members: number
     }
 } & Position
 
@@ -37,6 +37,7 @@ export default function PositionTableRow({
                 className="flex items-center gap-3 p-1"
             >
                 <Input
+                    id="position"
                     name="position"
                     className="flex-1"
                     defaultValue={position.name}
@@ -55,7 +56,7 @@ export default function PositionTableRow({
     const isNotEditingRow = (
         <>
             <td className="px-6">{position.name}</td>
-            <td className="px-6">{position._count.users}</td>
+            <td className="px-6">{position._count.members}</td>
             <td>
                 <div className="flex justify-end gap-3">
                     <IconButton
