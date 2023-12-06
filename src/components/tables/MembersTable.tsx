@@ -1,9 +1,9 @@
 import Image from "next/image"
 import { prisma } from "@/lib/db/prisma"
-
 import React from "react"
 import { DEFAULT_PROFILE_PIC } from "@/constants"
 import { IconButton } from "../form/Buttons"
+import DeleteMemberButton from "./DeleteMemberButton"
 
 export default async function MembersTable() {
     const members = await prisma.member.findMany({
@@ -44,8 +44,12 @@ export default async function MembersTable() {
                         {/* BOTTOM */}
                         <div className="flex items-center justify-between pt-4">
                             <div className="flex gap-3">
-                                <IconButton icon="edit" />
-                                <IconButton icon="delete" />
+                                <IconButton
+                                    isLink
+                                    href={`/members/${member.id}/edit`}
+                                    icon="edit"
+                                />
+                                <DeleteMemberButton member={member} />
                             </div>
                         </div>
                     </section>
@@ -104,12 +108,16 @@ export default async function MembersTable() {
                                 {member.position.name}
                             </td>
                             <td className="whitespace-nowrap px-3 py-3">
-                                {member.isUser ? member.isUser.role : 'Member'}
+                                {member.isUser ? member.isUser.role : "Member"}
                             </td>
                             <td className="whitespace-nowrap py-3 pl-6 pr-3">
                                 <div className="flex justify-end gap-3">
-                                    <IconButton isLink href={`/members/${member.id}/edit`} icon="edit" />
-                                    <IconButton icon="delete" />
+                                    <IconButton
+                                        isLink
+                                        href={`/members/${member.id}/edit`}
+                                        icon="edit"
+                                    />
+                                    <DeleteMemberButton member={member} />
                                 </div>
                             </td>
                         </tr>

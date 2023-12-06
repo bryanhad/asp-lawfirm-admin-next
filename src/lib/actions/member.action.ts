@@ -2,7 +2,8 @@
 import { z } from "zod"
 import { prisma } from "@/lib/db/prisma"
 import { revalidatePath } from "next/cache"
-import { UserInfoType } from "../../../types"
+import { DeleteMemberState, UserInfoType } from "../../../types"
+import getPrismaError from "@/utils/getPrismaError"
 
 const MemberFormSchema = z.object({
     email: z
@@ -19,7 +20,6 @@ const MemberFormSchema = z.object({
 export type MemberFormType = z.infer<typeof MemberFormSchema>
 
 export async function addMember(formData: FormData, userInfo: UserInfoType) {
-    console.log(formData, userInfo)
     const validation = MemberFormSchema.safeParse({
         email: formData.get("email"),
         name: formData.get("name"),
@@ -101,5 +101,25 @@ export async function editMember(
             error: true,
             message: "Something went wrong :(",
         }
+    }
+}
+
+
+export async function deleteMember(id: string): Promise<DeleteMemberState> {
+    try {
+        const { name } = await prisma.member.delete({
+            where: {
+                id,
+            },
+        })
+        revalidatePath("/members")
+        return {
+            error: false,
+            message: `Member '${name}' has successfully been deleted.`,
+        }
+    } catch (err: any) {
+        const res = getPrismaError(err)
+        if (res) return { error: true, message: res }
+        throw err
     }
 }
