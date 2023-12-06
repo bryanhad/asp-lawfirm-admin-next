@@ -1,17 +1,18 @@
 import Image from "next/image"
-import { prisma } from "@/lib/db/prisma"
 import React from "react"
 import { DEFAULT_PROFILE_PIC } from "@/constants"
 import { IconButton } from "../form/Buttons"
 import DeleteMemberButton from "./DeleteMemberButton"
+import { fetchFilteredMember } from "@/lib/data"
 
-export default async function MembersTable() {
-    const members = await prisma.member.findMany({
-        include: {
-            position: { select: { name: true } },
-            isUser: { select: { role: true } },
-        },
-    })
+type MemberTableProps = { query: string; currentPage: number }
+
+export default async function MembersTable({
+    query,
+    currentPage,
+}: MemberTableProps) {
+    const members = await fetchFilteredMember(query, currentPage)
+
     return (
         <div className="\ rounded-xl bg-slate-50 p-2">
             <div className="flex flex-col gap-4 md:hidden">
@@ -37,7 +38,7 @@ export default async function MembersTable() {
                                     </p>
                                 </span>
                             </div>
-                            <p className="rounded-xl bg-accent p-2 text-white">
+                            <p className=" text-gray-500">
                                 {member.position.name}
                             </p>
                         </div>
@@ -86,13 +87,13 @@ export default async function MembersTable() {
                         >
                             <td className="whitespace-nowrap py-3 pl-6 pr-3">
                                 <div className="flex items-center gap-3">
-                                    <div className="grid h-[35px] w-[35px] place-content-center overflow-hidden rounded-full">
+                                    <div className="relative grid h-[35px] w-[35px] place-content-center overflow-hidden rounded-full">
                                         <Image
                                             src={
                                                 member.picture ??
                                                 DEFAULT_PROFILE_PIC
                                             }
-                                            className="rounded-full"
+                                            className="rounded-full bg-slate-200"
                                             width={35}
                                             height={35}
                                             alt={`${member.name}'s profile picture`}

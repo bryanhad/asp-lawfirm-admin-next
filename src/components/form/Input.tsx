@@ -18,7 +18,7 @@ export default function Input({
         return (
             <input
                 size={1}
-                className={`input input-bordered w-full ${className}`}
+                className={`input input-bordered text-input-color w-full ${className}`}
                 {...props}
                 name={name}
                 id={id}
@@ -32,7 +32,7 @@ export default function Input({
             </label>
             <input
                 size={1}
-                className={`input input-bordered w-full ${className}`}
+                className={`input input-bordered text-input-color w-full ${className}`}
                 {...props}
                 name={name}
                 id={id}

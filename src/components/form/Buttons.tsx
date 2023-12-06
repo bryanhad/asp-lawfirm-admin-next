@@ -3,6 +3,7 @@ import { IoCloseOutline } from "react-icons/io5"
 import { FiCheck } from "react-icons/fi"
 import { FaRegTrashAlt } from "react-icons/fa"
 import Link from "next/link"
+import { FaTrash } from "react-icons/fa"
 
 type IconButtonTypes = {
     icon: "edit" | "delete" | "confirm" | "cancel" | "small-delete"
@@ -20,17 +21,19 @@ export function IconButton({ icon, isLink, href, ...props }: IconButtonTypes) {
     let showIcon
     let customStyle: string
 
-    const EDIT_STYLE = "text-sky-400"
-    const DELETE_STYLE = "text-red-400"
-    const CONFIRM_STYLE = "bg-green-400 text-white"
-    const CANCEL_STYLE = "bg-slate-300 text-white"
+    const EDIT_STYLE = "border-none bg-white hover:bg-slate-100 text-sky-400"
+    const DELETE_STYLE = "border-none bg-white hover:bg-slate-100 text-red-400"
+    const CONFIRM_STYLE =
+        "border-none hover:bg-green-300 bg-green-400 text-white"
+    const CANCEL_STYLE =
+        "border-none hover:bg-slate-200 bg-slate-300 text-white"
 
-    const SMALL_DELETE_STYLE = 'bg-red-400 text-white p-1'
+    const SMALL_DELETE_STYLE = "text-slate-400 p-2"
 
     if (icon.includes("small")) {
         switch (icon) {
             case "small-delete":
-                showIcon = <IoCloseOutline />
+                showIcon = <FaTrash />
                 customStyle = SMALL_DELETE_STYLE
                 break
             default:
@@ -75,7 +78,7 @@ export function IconButton({ icon, isLink, href, ...props }: IconButtonTypes) {
     if (isLink && href) {
         return (
             <Link
-                className={`btn btn_icon ${customStyle} ${props.className}`}
+                className={`btn_icon btn ${customStyle} ${props.className}`}
                 href={href}
             >
                 {showIcon}
@@ -85,7 +88,7 @@ export function IconButton({ icon, isLink, href, ...props }: IconButtonTypes) {
 
     return (
         <button
-            className={`btn btn_icon ${customStyle} ${props.className}`}
+            className={`btn_icon btn  ${customStyle} ${props.className}`}
             {...props}
         >
             {showIcon}
@@ -111,7 +114,7 @@ export function Button({ buttonType, isLink, href, ...props }: MyButtonTypes) {
     if (isLink && href) {
         return (
             <Link
-                className={`btn btn_text ${customStyle} ${props.className}`}
+                className={`btn_text btn ${customStyle} ${props.className}`}
                 href={href}
             >
                 {props.children}
@@ -121,7 +124,7 @@ export function Button({ buttonType, isLink, href, ...props }: MyButtonTypes) {
 
     return (
         <button
-            className={`btn btn_text ${customStyle} ${props.className}`}
+            className={`btn_text btn ${customStyle} ${props.className}`}
             {...props}
         >
             {props.children}

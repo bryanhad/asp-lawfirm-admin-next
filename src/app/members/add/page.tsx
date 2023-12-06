@@ -10,7 +10,7 @@ export default async function AddMemberPage() {
     return (
         <ContentContainer className="flex flex-col gap-3">
             <PageTitle>Add New Member</PageTitle>
-            <MemberForm serverAction={addMember} positions={positions} />
+            <MemberForm buttonText="Add Member" serverAction={addMember} positions={positions} />
         </ContentContainer>
     )
 }

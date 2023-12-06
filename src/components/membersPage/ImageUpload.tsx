@@ -27,7 +27,7 @@ export default function ImageUpload({
         <div>
             <div className="flex items-center gap-6">
                 <div className="relative ">
-                    <div className="grid aspect-square h-[80px] place-content-center overflow-hidden rounded-full">
+                    <div className="grid aspect-square h-[80px] border place-content-center overflow-hidden rounded-full">
                         <Image
                             src={
                                 currentImage.length > 0
