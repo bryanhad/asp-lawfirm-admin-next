@@ -69,40 +69,49 @@ export default function UserInfoInput({
     return (
         <div className="flex flex-col gap-2 ">
             <div className="flex">
-                <label htmlFor={infoType}>
+                <label className="text-slate-500" htmlFor={infoType}>
                     {capitalizeFirstLetter(infoType)}
                 </label>
                 <span className="ml-2 italic text-slate-300">
                     (Press enter to submit)
                 </span>
             </div>
-            <section className="group flex rounded-lg border border-gray-300">
-                <input
-                    ref={ref}
-                    className="flex-1 rounded-l-lg px-5 py-3 focus:outline-none"
-                    type="text"
-                    id={infoType}
-                    value={input}
-                    onChange={handleChange}
-                    onKeyDown={handleEnter}
-                />
-                <button onClick={handleClick} className="rounded-r-lg bg-blue-500 px-6 text-white" type="button">
-                    ADD
-                </button>
-            </section>
+            <div className="rounded-lg border border-gray-300 p-[2px] text-input-color">
+                <section className="group flex rounded-lg border border-gray-300">
+                    <input
+                        size={1}
+                        ref={ref}
+                        className="flex-1 rounded-l-lg px-5 py-3 text-input-color focus:outline-none"
+                        type="text"
+                        id={infoType}
+                        value={input}
+                        onChange={handleChange}
+                        onKeyDown={handleEnter}
+                    />
+                    <button
+                        onClick={handleClick}
+                        className="rounded-r-lg bg-blue-600 px-6 text-white"
+                        type="button"
+                    >
+                        ADD
+                    </button>
+                </section>
 
-            <ul className="flex flex-col gap-2">
-                {infos.map((el, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                        <IconButton
-                            icon="small-delete"
-                            onClick={() => handleDelete(el)}
-                            type="button"
-                        />
-                        <p>{el}</p>
-                    </li>
-                ))}
-            </ul>
+                {infos.length > 0 && (
+                    <ul className="flex flex-col gap-2 p-2">
+                        {infos.map((el, i) => (
+                            <li key={i} className="flex items-center gap-2">
+                                <IconButton
+                                    icon="small-delete"
+                                    onClick={() => handleDelete(el)}
+                                    type="button"
+                                />
+                                <p>{el}</p>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
         </div>
     )
 }

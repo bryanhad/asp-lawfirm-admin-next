@@ -15,23 +15,28 @@ import Select from "@/components/form/Select"
 type MemberFormProps = {
     memberData?: MemberFormType & UserInfoType
     positions: Position[]
-    serverAction(formData: FormData, userInfo: UserInfoType): Promise<{
-        error: boolean;
+    serverAction(
+        formData: FormData,
+        userInfo: UserInfoType,
+    ): Promise<{
+        error: boolean
         errors?: {
-            name?: string[] | undefined;
-            email?: string[] | undefined;
-            picture?: string[] | undefined;
-            description?: string[] | undefined;
-            positionId?: string[] | undefined;
-        };
-        message: string;
+            name?: string[] | undefined
+            email?: string[] | undefined
+            picture?: string[] | undefined
+            description?: string[] | undefined
+            positionId?: string[] | undefined
+        }
+        message: string
     }>
+    buttonText: string
 }
 
 export default function MemberForm({
     memberData,
     positions,
-    serverAction
+    serverAction,
+    buttonText,
 }: MemberFormProps) {
     // dont judge me :D
     // the abomination below just checks whether there is a memberData or not.
@@ -75,7 +80,8 @@ export default function MemberForm({
                 <input
                     type="text"
                     name="picture"
-                    value={picture} onChange={() => {}} 
+                    value={picture}
+                    onChange={() => {}}
                     className="hidden"
                 />
             )}
@@ -125,10 +131,7 @@ export default function MemberForm({
                         defaultValue={memberData?.positionId}
                     >
                         {positions.map((position) => (
-                            <option
-                                key={position.id}
-                                value={position.id}
-                            >
+                            <option key={position.id} value={position.id}>
                                 {position.name}
                             </option>
                         ))}
@@ -141,11 +144,13 @@ export default function MemberForm({
                 </div>
                 {/* DESCRIPTION */}
                 <TextArea
+                    rows={5}
                     id="description"
                     name="description"
                     label="Description"
-                    defaultValue={memberData?.description ? memberData.description : ""}
-              
+                    defaultValue={
+                        memberData?.description ? memberData.description : ""
+                    }
                 />
                 {/* EDUCATION */}
                 <UserInfoInput
@@ -167,8 +172,8 @@ export default function MemberForm({
                 />
             </div>
 
-            <button className="btn mt-6 bg-accent font-semibold text-white">
-                Add Member
+            <button className="btn mt-6 bg-blue-600 font-semibold text-white">
+                {buttonText}
             </button>
         </form>
     )

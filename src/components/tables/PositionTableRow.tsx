@@ -55,9 +55,9 @@ export default function PositionTableRow({
 
     const isNotEditingRow = (
         <>
-            <td className="px-6">{position.name}</td>
-            <td className="px-6">{position._count.members}</td>
-            <td>
+            <td className="py-1 px-6">{position.name}</td>
+            <td className="py-1 px-6">{position._count.members}</td>
+            <td className="py-1 ">
                 <div className="flex justify-end gap-3">
                     <IconButton
                         onClick={() => setIsEditing((prev) => !prev)}

@@ -37,7 +37,7 @@ export default async function MembersTable() {
                                     </p>
                                 </span>
                             </div>
-                            <p className="rounded-xl bg-accent p-2 text-white">
+                            <p className=" text-gray-500">
                                 {member.position.name}
                             </p>
                         </div>
@@ -92,7 +92,7 @@ export default async function MembersTable() {
                                                 member.picture ??
                                                 DEFAULT_PROFILE_PIC
                                             }
-                                            className="rounded-full"
+                                            className="rounded-full bg-slate-200"
                                             width={35}
                                             height={35}
                                             alt={`${member.name}'s profile picture`}

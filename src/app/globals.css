@@ -6,13 +6,13 @@ input {
 }
 
 .btn_icon {
-    @apply text-xl md:text-2xl
+    @apply text-xl md:text-2xl;
 }
 
 .btn_text {
-    @apply  md:text-lg
+    @apply md:text-lg;
 }
 
 .text-error {
-    @apply text-sm text-red-500
+    @apply text-sm text-red-500;
 }

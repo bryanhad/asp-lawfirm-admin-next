@@ -29,6 +29,7 @@ export default async function EditMemberPage({
                 serverAction={editMemberWithId}
                 positions={positions}
                 memberData={memberData}
+                buttonText="Edit Member"
             />
         </ContentContainer>
     )

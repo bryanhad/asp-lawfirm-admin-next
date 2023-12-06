@@ -13,6 +13,7 @@ const config: Config = {
                 primary: "#282e3f",
                 secondary: "#333a4d",
                 accent: "#c18f59",
+                "input-color": "#334155",
             },
         },
     },
