@@ -4,6 +4,7 @@ import { FiCheck } from "react-icons/fi"
 import { FaRegTrashAlt } from "react-icons/fa"
 import Link from "next/link"
 import { FaTrash } from "react-icons/fa"
+import clsx from "clsx"
 
 type IconButtonTypes = {
     icon: "edit" | "delete" | "confirm" | "cancel" | "small-delete"
@@ -19,22 +20,19 @@ type MyButtonTypes = {
 
 export function IconButton({ icon, isLink, href, ...props }: IconButtonTypes) {
     let showIcon
-    let customStyle: string
 
-    const EDIT_STYLE = "border-none bg-white hover:bg-slate-100 text-sky-400"
-    const DELETE_STYLE = "border-none bg-white hover:bg-slate-100 text-red-400"
-    const CONFIRM_STYLE =
-        "border-none hover:bg-green-300 bg-green-400 text-white"
-    const CANCEL_STYLE =
-        "border-none hover:bg-slate-200 bg-slate-300 text-white"
-
-    const SMALL_DELETE_STYLE = "text-slate-400 p-2"
+    const customStyle = clsx("border-none", {
+        "bg-white hover:bg-slate-100 text-sky-400": icon === "edit",
+        "bg-white hover:bg-slate-100 text-red-400": icon === "delete",
+        "hover:bg-green-300 bg-green-400 text-white": icon === "confirm",
+        "hover:bg-slate-200 bg-slate-300 text-white": icon === "cancel",
+        "text-slate-400 p-2": icon === "small-delete",
+    })
 
     if (icon.includes("small")) {
         switch (icon) {
             case "small-delete":
                 showIcon = <FaTrash />
-                customStyle = SMALL_DELETE_STYLE
                 break
             default:
                 throw Error(
@@ -55,19 +53,15 @@ export function IconButton({ icon, isLink, href, ...props }: IconButtonTypes) {
     switch (icon) {
         case "edit":
             showIcon = <GoPencil />
-            customStyle = EDIT_STYLE
             break
         case "delete":
             showIcon = <FaRegTrashAlt />
-            customStyle = DELETE_STYLE
             break
         case "confirm":
             showIcon = <FiCheck />
-            customStyle = CONFIRM_STYLE
             break
         case "cancel":
             showIcon = <IoCloseOutline />
-            customStyle = CANCEL_STYLE
             break
         default:
             throw Error(
@@ -97,13 +91,12 @@ export function IconButton({ icon, isLink, href, ...props }: IconButtonTypes) {
 }
 
 export function Button({ buttonType, isLink, href, ...props }: MyButtonTypes) {
-    let customStyle: string
-
-    const ADD_STYLE = "bg-green-500 text-white"
+    const customStyle = clsx({
+        "bg-green-500 text-white": buttonType === "add",
+    })
 
     switch (buttonType) {
         case "add":
-            customStyle = ADD_STYLE
             break
         default:
             throw Error(
