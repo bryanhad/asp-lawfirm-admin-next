@@ -17,6 +17,11 @@ export type DeletePositionState = {
     message: string
 }
 
+export type DeleteMemberState = {
+    error: boolean
+    message: string
+}
+
 export type UserInfoType = {
     education: string[]
     organization: string[]

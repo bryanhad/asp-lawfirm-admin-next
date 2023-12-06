@@ -49,7 +49,7 @@ export default function PositionTableRow({
                     type="button"
                 />
             </form>
-            {error && <p className="text-error p-2">{error}</p>}
+            {error && <p className="p-2 text-error">{error}</p>}
         </td>
     )
 
@@ -63,7 +63,7 @@ export default function PositionTableRow({
                         onClick={() => setIsEditing((prev) => !prev)}
                         icon="edit"
                     />
-                    <DeletePositionButton id={position.id} />
+                    <DeletePositionButton position={position} />
                 </div>
             </td>
         </>
@@ -71,13 +71,15 @@ export default function PositionTableRow({
     return <>{isEditing ? isEditingRow : isNotEditingRow}</>
 }
 
-function DeletePositionButton({ id }: { id: string }) {
-    const deletePositionWithId = deletePosition.bind(null, id)
+function DeletePositionButton({ position }: { position: {name:string, id:string} }) {
+    const deletePositionWithId = deletePosition.bind(null, position.id)
 
     return (
-        <form
-            action={() => {
-                showConfirm(async (result) => {
+        <IconButton
+            icon="delete"
+            type="submit"
+            onClick={() =>
+                showConfirm(`You sure want to delete position '${position.name}'?`, async (result) => {
                     if (result.isConfirmed) {
                         const { message } = await deletePositionWithId()
                         Swal.fire({
@@ -87,9 +89,7 @@ function DeletePositionButton({ id }: { id: string }) {
                         })
                     }
                 })
-            }}
-        >
-            <IconButton icon="delete" type="submit" />
-        </form>
+            }
+        />
     )
 }

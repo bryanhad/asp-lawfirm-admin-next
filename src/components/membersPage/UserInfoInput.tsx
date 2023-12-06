@@ -1,5 +1,4 @@
 "use client"
-import Input from "@/components/form/Input"
 import { UserInfoType } from "../../../types"
 import {
     Dispatch,
@@ -7,6 +6,7 @@ import {
     KeyboardEvent,
     useState,
     ChangeEvent,
+    useRef,
 } from "react"
 import { IconButton } from "@/components/form/Buttons"
 import capitalizeFirstLetter from "@/utils/capitalizeFirstLetter"
@@ -22,6 +22,7 @@ export default function UserInfoInput({
     infos: string[]
     infoType: UserInfos
 }) {
+    const ref = useRef<HTMLInputElement>(null)
     const [input, setInput] = useState<string>("")
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -42,6 +43,20 @@ export default function UserInfoInput({
         }
     }
 
+    function handleClick(e: React.MouseEvent<HTMLElement>) {
+        if (!input || infos.includes(input)) return
+        setUserInfo((prev) => {
+            return {
+                ...prev,
+                [infoType]: [...prev[infoType], input],
+            }
+        })
+        setInput("")
+        if (ref.current) {
+            ref.current.focus()
+        }
+    }
+
     function handleDelete(el: string) {
         setUserInfo((prev) => {
             return {
@@ -52,17 +67,30 @@ export default function UserInfoInput({
     }
 
     return (
-        <div className="flex flex-col gap-2">
-            <Input
-                label={`${capitalizeFirstLetter(infoType)}`}
-                extra={<span className="italic text-slate-300 ml-2">(Press enter to submit)</span>}
-                name={infoType}
-                type="text"
-                id={infoType}
-                value={input}
-                onChange={handleChange}
-                onKeyDown={handleEnter}
-            />
+        <div className="flex flex-col gap-2 ">
+            <div className="flex">
+                <label htmlFor={infoType}>
+                    {capitalizeFirstLetter(infoType)}
+                </label>
+                <span className="ml-2 italic text-slate-300">
+                    (Press enter to submit)
+                </span>
+            </div>
+            <section className="group flex rounded-lg border border-gray-300">
+                <input
+                    ref={ref}
+                    className="flex-1 rounded-l-lg px-5 py-3 focus:outline-none"
+                    type="text"
+                    id={infoType}
+                    value={input}
+                    onChange={handleChange}
+                    onKeyDown={handleEnter}
+                />
+                <button onClick={handleClick} className="rounded-r-lg bg-blue-500 px-6 text-white" type="button">
+                    ADD
+                </button>
+            </section>
+
             <ul className="flex flex-col gap-2">
                 {infos.map((el, i) => (
                     <li key={i} className="flex items-center gap-2">
