@@ -1,10 +1,9 @@
 import Image from "next/image"
-import { prisma } from "@/lib/db/prisma"
 import React from "react"
 import { DEFAULT_PROFILE_PIC } from "@/constants"
 import { IconButton } from "../form/Buttons"
 import DeleteMemberButton from "./DeleteMemberButton"
-import fetchFilteredMember from "@/lib/data"
+import { fetchFilteredMember } from "@/lib/data"
 
 type MemberTableProps = { query: string; currentPage: number }
 
@@ -13,7 +12,7 @@ export default async function MembersTable({
     currentPage,
 }: MemberTableProps) {
     const members = await fetchFilteredMember(query, currentPage)
-    console.log(members)
+
     return (
         <div className="\ rounded-xl bg-slate-50 p-2">
             <div className="flex flex-col gap-4 md:hidden">

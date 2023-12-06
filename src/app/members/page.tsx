@@ -3,8 +3,10 @@ import PageTitle from "@/components/PageTitle"
 import { Button } from "@/components/form/Buttons"
 import SearchBar from "@/components/form/SearchBar"
 import MembersTable from "@/components/tables/MembersTable"
+import Pagination from "@/components/tables/Pagination"
+import { fetchMembersPage } from "@/lib/data"
 
-export default function MembersPage({
+export default async function MembersPage({
     searchParams,
 }: {
     searchParams?: {
@@ -14,6 +16,7 @@ export default function MembersPage({
 }) {
     const query = searchParams?.q || ""
     const currentPage = Number(searchParams?.page) || 1
+    const totalPages = await fetchMembersPage(query)
 
     return (
         <ContentContainer className="flex flex-col gap-3">
@@ -30,6 +33,7 @@ export default function MembersPage({
                 </Button>
             </div>
             <MembersTable query={query} currentPage={currentPage} />
+            <Pagination totalPages={totalPages}/>
         </ContentContainer>
     )
 }
