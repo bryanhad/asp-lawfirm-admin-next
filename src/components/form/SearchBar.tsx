@@ -2,21 +2,29 @@
 import { FiSearch } from "react-icons/fi"
 import { useSearchParams, usePathname, useRouter } from "next/navigation"
 import Input from "@/components/form/Input"
+import { useDebouncedCallback } from "use-debounce"
 
 export default function SearchBar({ placeholder }: { placeholder: string }) {
+    // useSearchParams:
+    // "/dashboard/invoices?page=1&query=pending" 
+    // would look like this: {page: '1', query: 'pending'}
     const searchParams = useSearchParams()
+
+    // usePathname:
+    // Lets you read the current URL's pathname
     const pathname = usePathname()
     const { replace } = useRouter()
 
-    function handleSearch(term: string) {
-        const params = new URLSearchParams(searchParams)
+    const handleSearch = useDebouncedCallback((term: string) => {
+        const params = new URLSearchParams(searchParams) //URLSearchParams is a WebAPI for manipulating URL query params
+        // instead of using complex string literal, it will just do it for you! e.g.: "?page=1&query=a"
         if (term) {
             params.set("q", term)
         } else {
             params.delete("q")
         }
         replace(`${pathname}?${params.toString()}`)
-    }
+    }, 300)
 
     return (
         <div className="relative flex flex-1 flex-shrink-0">

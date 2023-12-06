@@ -4,7 +4,17 @@ import { Button } from "@/components/form/Buttons"
 import SearchBar from "@/components/form/SearchBar"
 import MembersTable from "@/components/tables/MembersTable"
 
-export default function MembersPage() {
+export default function MembersPage({
+    searchParams,
+}: {
+    searchParams?: {
+        q?: string
+        page?: string
+    }
+}) {
+    const query = searchParams?.q || ""
+    const currentPage = Number(searchParams?.page) || 1
+
     return (
         <ContentContainer className="flex flex-col gap-3">
             <PageTitle>Members</PageTitle>
@@ -19,7 +29,7 @@ export default function MembersPage() {
                     Add New
                 </Button>
             </div>
-            <MembersTable />
+            <MembersTable query={query} currentPage={currentPage} />
         </ContentContainer>
     )
 }
